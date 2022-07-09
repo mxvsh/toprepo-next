@@ -14,7 +14,7 @@ const RepoList = ({ repos = [] }) => {
 			<Stack overflow={'auto'} spacing={4}>
 				{repos.map((repo) => {
 					let { name, description, stargazers_count, forks_count } = repo;
-					const isSelected = selected_repo === name;
+					const isSelected = selected_repo?.name === name;
 
 					return (
 						<Box
@@ -23,7 +23,7 @@ const RepoList = ({ repos = [] }) => {
 							cursor='pointer'
 							userSelect='none'
 							onClick={() => {
-								dispatch(setSelectedRepo(name));
+								dispatch(setSelectedRepo(repo));
 							}}
 							rounded='lg'
 							borderWidth='2px'
