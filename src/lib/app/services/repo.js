@@ -9,9 +9,19 @@ export const repoApi = createApi({
 				`/search/repositories?sort=stars&order=desc&q=language:${lang}`,
 		}),
 		getRepo: builder.mutation({
-			query: (name) => `/repos/${name}`,
+			query: ({ owner, name }) => `/repos/${owner}/${name}`,
+		}),
+		getRepoReadme: builder.query({
+			query: ({ owner, name, default_branch }) => ({
+				url: `https://raw.githubusercontent.com/${owner}/${name}/${default_branch}/README.md`,
+				responseHandler: (response) => response.text(),
+			}),
 		}),
 	}),
 });
 
-export const { useGetTrendingQuery, useGetRepoMutation } = repoApi;
+export const {
+	useGetTrendingQuery,
+	useGetRepoReadmeQuery,
+	useGetRepoMutation,
+} = repoApi;
